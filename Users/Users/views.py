@@ -75,9 +75,12 @@ def createUserAuthTemplate(request):
         if formAuth.is_valid():
             csrf_token = get_token(request)
             formCredentials = CredentialsForm(formAuth.cleaned_data)
-            apiGateway = "http://localhost:8000/auth/"
+            formCredentials.is_valid()
+            apiGateway = "http://localhost:8000/auth/create/"
             response = requests.post(apiGateway, json=formCredentials.cleaned_data, headers={'X-CSRFToken': csrf_token}, cookies={'csrftoken':csrf_token})
+            print(response)
             if response.status_code == 201:
+                print('Entre Aquí 2')
                 form = UserForm(formAuth.cleaned_data)
                 form.save()
                 messages.success(request, "User created successfully")

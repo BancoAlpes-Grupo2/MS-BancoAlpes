@@ -18,7 +18,7 @@ from . import views
 
 urlpatterns = [
     #cambiar path y funcion
-    path('createuser/', views.createUserTemplate, name='create_user'),
+    path('createuser/', views.createUserAuthTemplate, name='create_user'),
     path('getusers/', views.getUsersTemplate, name='get_users'),  # Ajustado para que esta sea la ruta raíz de /users/
     path('userinformation/<int:userId>/', views.getUserTemplate, name='get_user'),
     
