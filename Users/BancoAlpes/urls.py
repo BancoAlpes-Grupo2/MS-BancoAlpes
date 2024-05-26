@@ -22,4 +22,5 @@ urlpatterns = [
     path('users/', views.getUsers),
     path('users/create/', views.createUser),
     path('users/<int:userId>/', views.getUser),
+    path('', views.home, name='home')
 ]

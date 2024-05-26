@@ -6,4 +6,3 @@ class userForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['name', 'lastName', 'country', 'city', 'phone', 'email']
-#hola
