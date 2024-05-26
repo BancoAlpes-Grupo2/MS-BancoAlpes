@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h1>Información del Usuario:</h1>
+<br>
+
+<div class="card">
+    <div class="card-header"><strong>
+        {{ user.name }} {{ user.lastName }}</strong>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <strong>ID: </strong>{{ user.id }}<br>
+            <strong>País: </strong>{{ user.country }}<br> 
+            <strong>Ciudad: </strong>{{ user.city }}<br> 
+            <strong>Número: </strong>{{ user.phone }}<br> 
+            <strong>Correo: </strong>{{ user.email }}<br> 
+        </p>
+    </div>
+</div>
+<br><br>
+<a href="{% url 'get_users' %}" class="btn btn-primary">Atrás</a>
+{% endblock %}
+

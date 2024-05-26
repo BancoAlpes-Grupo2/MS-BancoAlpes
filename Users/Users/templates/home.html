@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Usuarios</h1>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">País</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Número</th>
+        <th scope="col">Correo</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+    {% if users %}
+        {% for user in users %}
+            <tr>
+                <td><a href="{% url 'get_user' user.id %}">{{ user.id }}</a></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.country }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}
