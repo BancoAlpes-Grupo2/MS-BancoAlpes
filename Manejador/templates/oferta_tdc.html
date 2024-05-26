@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Los Alpes - Oferta TDC</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand nav-link navbar-title" style="font-size: 2.5rem; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            <img src="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" alt="Icon" width="100" height="100" class="d-inline-block align-text-mid"> Banco de Los Alpes
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav d-flex flex-row column-gap-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="/usuarios">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/despliegue">Despliegue</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2>Oferta de Tarjetas de Crédito</h2>
+        <p>Bienvenido a la página de ofertas de tarjetas de crédito del Banco Los Alpes. Aquí podrás encontrar información sobre las distintas tarjetas de crédito que ofrecemos.</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tarjeta Básica</h5>
+                        <p class="card-text">Puntaje mínimo: 0</p>
+                        <p class="card-text">Beneficios: Sin costo anual, tasa de interés baja.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tarjeta Silver</h5>
+                        <p class="card-text">Puntaje mínimo: 50</p>
+                        <p class="card-text">Beneficios: Recompensas por compras, límite de crédito más alto.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tarjeta Gold</h5>
+                        <p class="card-text">Puntaje mínimo: 75</p>
+                        <p class="card-text">Beneficios: Acceso a salones VIP, seguros de viaje.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="container mt-5">
+        <h2>Oferta de Tarjetas de Crédito</h2>
+        <p>Ingrese el ID del usuario para ver las tarjetas disponibles.</p>
+        <form id="obtenerTarjetasForm">
+            <div class="mb-3">
+                <label for="usuarioId" class="form-label">ID de Usuario:</label>
+                <input type="text" id="usuarioId" name="usuarioId" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Obtener Tarjetas</button>
+        </form>
+
+        <h3 class="mt-5">Resultado:</h3>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        document.getElementById('obtenerTarjetasForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const usuarioId = document.getElementById('usuarioId').value;
+            fetch(`/usuarios/${usuarioId}/tarjetas`)
+            .then(response => response.json())
+            .then(data => {
+                const resultadoDiv = document.getElementById('resultado');
+                if (data.error) {
+                    resultadoDiv.innerHTML = `<p class="text-danger">Error: ${data.error}</p>`;
+                } else {
+                    const tarjetas = data.map(tarjeta => `<li>${tarjeta.tipo} (Puntaje Mínimo: ${tarjeta.puntaje_minimo})</li>`).join('');
+                    resultadoDiv.innerHTML = `<ul>${tarjetas}</ul>`;
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+8zQxJ6A1SA6d5H/8e5wj9Pt+kdf6" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,20 +1,28 @@
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 import random
-from models import db, Usuario, Tarjeta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///manejador.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-db.init_app(app)
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
+    puntaje = db.Column(db.Integer, nullable=False)
+
+class Tarjeta(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tipo = db.Column(db.String(50), nullable=False)
+    puntaje_minimo = db.Column(db.Integer, nullable=False)
 
 with app.app_context():
     db.create_all()
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def oferta_tdc():
+    return render_template('oferta_tdc.html')
 
 @app.route('/usuarios', methods=['POST'])
 def crear_usuario():
@@ -35,4 +43,4 @@ def obtener_tarjetas(id):
     return jsonify(tarjetas_asignadas)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5001, debug=True)
