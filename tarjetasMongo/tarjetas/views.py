@@ -6,9 +6,11 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
+from tarjetas.utils.authentication import jwt_required
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import json
+
 
 def TarjetaList(request):
     client = MongoClient(settings.MONGO_CLI)
@@ -18,11 +20,13 @@ def TarjetaList(request):
     tarjetas = [{
             'id': str(tarjeta['_id']),  
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+            'puntaje': int(tarjeta.get('puntaje', 0))
         } for tarjeta in tarjetas_data]
     client.close()
     return render(request, 'Tarjeta/tarjetas.html', {'tarjeta_list': tarjetas})
 
+
+@jwt_required
 def TarjetaCreate(request):
     client = MongoClient(settings.MONGO_CLI)
     db = client.tarjetas_db
@@ -42,7 +46,7 @@ def TarjetaCreate(request):
     client.close()
     return render(request, 'Tarjeta/tarjetaCreate.html')
 
-
+@jwt_required
 def TarjetaUpdate(request, id):
     client = MongoClient(settings.MONGO_CLI)
     db = client.tarjetas_db
@@ -56,7 +60,7 @@ def TarjetaUpdate(request, id):
         }
         result = tarjetas_collection.update_one({'_id': ObjectId(id)}, {'$set': update_data})
         client.close()
-        if result.modified_count > 0:
+        if result.modified_count >= 0:
             messages.success(request, 'Tarjeta actualizada exitosamente')
             return HttpResponseRedirect(reverse('tarjetaList'))
         else:
@@ -64,7 +68,7 @@ def TarjetaUpdate(request, id):
     else:
         form = {
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+            'puntaje': int(tarjeta.get('puntaje', 0))
         }
         client.close()
         return render(request, 'Tarjeta/tarjetaUpdate.html', {'form': form, 'tarjeta_id': id})
@@ -76,18 +80,17 @@ def getTarjetaList(request):
         db = client.tarjetas_db
         tarjetas_collection = db['tarjetas']
         tarjetas_data = tarjetas_collection.find({})
-        # Convertir los documentos MongoDB a formato adecuado para JSON
         tarjetas = [{
             'id': str(tarjeta['_id']), 
             'tipo': tarjeta.get('tipo', ''),
-            'puntaje': tarjeta.get('puntaje', 0)
+            'puntaje': int(tarjeta.get('puntaje', 0))
         } for tarjeta in tarjetas_data]
 
         client.close()
         return JsonResponse(tarjetas, safe=False)
     
 
-    
+@jwt_required
 def deleteTarjeta(request, id):
     if request.method == 'POST':
         client = MongoClient(settings.MONGO_CLI)
