@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 p-5">
+        <h2 class="fs-1 fw-bold mt-4">Todo lo que necesitas, en un solo lugar</h2>
+        <p class="fs-2">Con nuestra tarjeta de crédito, lleva el control de tus finanzas con facilidad y estilo. ¡Adquiere tu tarjeta de crédito hoy y comienza a disfrutar de todos nuestros beneficios!</p>
+        <a href="{% url 'userForm' %}" class="btn btn-outline-dark">Solicitar</a>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center">
+        <img src="https://img.freepik.com/free-vector/banking-industry-concept-illustration_114360-13934.jpg?w=740&t=st=1712971572~exp=1712972172~hmac=e066824cbcc748bb1803a87ab55dea61cbe55da4514114d9dbe47cc7a32af12a" alt="home" class="img-fluid" style="max-width: 100%;">
+    </div>
+</div>
+<h2 class="fs-3 fw-bold mb-4">Conoce más de nuestros productos</h2>
+<hr class="mt-1">
+<div class="row row-cols-auto justify-content-around">
+    <div class="card" style="width: 18rem;">
+        <img src="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" class="card-img-top p-3" alt="Functionality">
+        <div class="card-body">
+            <h5 class="card-title">Functionality</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <img src="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" class="card-img-top p-3" alt="Functionality">
+        <div class="card-body">
+            <h5 class="card-title">Functionality</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <img src="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" class="card-img-top p-3" alt="Functionality">
+        <div class="card-body">
+            <h5 class="card-title">Functionality</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+_format_version: "2.1"
+
+services:
+  - host: auth_upstream
+    name: auth_service
+    protocol: http
+    routes:
+      - name: auth
+        paths:
+          - /auth
+        strip_path: false
+  - host: home_upstream
+    name: home_service
+    protocol: http
+    routes:
+      - name: home
+        paths:
+          - /
+        strip_path: false
+  - host: users_upstream
+    name: users_service
+    protocol: http
+    routes:
+      - name: users
+        paths:
+          - /users
+        strip_path: false
+
+upstreams:
+  - name: auth_upstream
+    targets:
+      - target: host.docker.internal:8082
+        weight: 100
+  - name: home_upstream
+    targets:
+      - target: host.docker.internal:8080
+        weight: 100
+  - name: users_upstream
+    targets:
+      - target: host.docker.internal:8081
+        weight: 100
