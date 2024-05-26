@@ -9,3 +9,8 @@ class User(models.Model):
     email = models.EmailField(max_length=100)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    role = models.CharField(max_length=50)
+
+class Credentials(models.Model):
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)

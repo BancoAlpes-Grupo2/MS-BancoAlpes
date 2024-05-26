@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', views.logIn),
     path('auth/create/', views.createUser),
+    path('auth/test/', views.test),
 ]
