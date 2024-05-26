@@ -1,0 +1,4 @@
+Correr el proyecto:
+1-Tener descargados los requirements (Flask,flask_sqlalchemy, random)
+2-Para poblar la base de datos se deberá descargar faker (Se crearán 1000 usuarios)
+3-Una vez poblada la bd, se debe correr app.py (También es posible crear manualmente usuarios desde la página)

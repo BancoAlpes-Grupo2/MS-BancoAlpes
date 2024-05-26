@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Banco Los Alpes</title>
+        <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" type="image/x-icon">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        {% block css %}{% endblock %}
+    </head>
+
+<head>
+    <a class="navbar-brand nav-link navbar-title"  style="font-size: 2.5rem; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://cdn-icons-png.flaticon.com/512/8312/8312976.png" alt="Icon" width="100" height="100" class="d-inline-block align-text-mid"> Banco de Los Alpes
+    </a>
+    <ul class="navbar-nav d-flex flex-row column-gap-4">
+        <li class="nav-item">
+          <a class="nav-link {% block navRequest %}{% endblock %}" >Adquirir TC</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block navUsers %}{% endblock %}" >Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block navDeploy %}{% endblock %}" >Despliegue</a>
+        </li>
+      </ul>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejador de Tarjetas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin-bottom: 20px; }
+        label { display: block; margin: 5px 0; }
+        input[type="text"] { width: 200px; padding: 5px; }
+        input[type="submit"] { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h2>Manejador de Tarjetas</h2>
+
+    <h3>Crear Usuario</h3>
+    <form id="crearUsuarioForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <input type="submit" value="Crear Usuario">
+    </form>
+
+    <h3>Obtener Tarjetas</h3>
+    <form id="obtenerTarjetasForm">
+        <label for="usuarioId">ID de Usuario:</label>
+        <input type="text" id="usuarioId" name="usuarioId" required>
+        <input type="submit" value="Obtener Tarjetas">
+    </form>
+
+    <h3>Resultado:</h3>
+    <div id="resultado"></div>
+
+    <script>
+        console.log("El script de JavaScript se está ejecutando.");
+
+        document.getElementById('crearUsuarioForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            fetch('/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre: nombre })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultado').innerHTML = `<p>Usuario creado: ID=${data.id}, Nombre=${data.nombre}, Puntaje=${data.puntaje}</p>`;
+            });
+        });
+
+        document.getElementById('obtenerTarjetasForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const usuarioId = document.getElementById('usuarioId').value;
+            fetch(`/usuarios/${usuarioId}/tarjetas`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('resultado').innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    const tarjetas = data.map(tarjeta => `<li>${tarjeta.tipo} (Puntaje Mínimo: ${tarjeta.puntaje_minimo})</li>`).join('');
+                    document.getElementById('resultado').innerHTML = `<ul>${tarjetas}</ul>`;
+                }
+            });
+        });
+
+        console.log("Se han agregado los event listeners para los formularios.");
+    </script>
+</body>
+</html>
