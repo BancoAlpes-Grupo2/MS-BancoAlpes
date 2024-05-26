@@ -3,7 +3,7 @@ resources:
 - name: services-apps
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags:
@@ -19,7 +19,7 @@ resources:
 - name: api-gateway
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceRanges:
@@ -30,12 +30,28 @@ resources:
     - IPProtocol: TCP
       ports:
       - 8000
+      
+# Firewall rule
+- name: msd-services-apps-web
+  type: compute.v1.firewall
+  properties:
+    network: https://www.googleapis.com/compute/v1/projects/data-dragon-415315/global/networks/default
+    priority: 1000
+    direction: INGRESS
+    sourceRanges: 
+    - 0.0.0.0/0
+    targetTags:
+    - msd-services-firewall
+    allowed:
+    - IPProtocol: TCP
+      ports: 
+      - 8080
   
 # Firewall rule
 - name: db-firewall
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags:
@@ -47,12 +63,73 @@ resources:
       ports:
       - 5432
 
+# Firewall rule Nosql
+- name: nosqld-firewall-django
+  type: compute.v1.firewall
+  properties:
+    network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
+    priority: 1000
+    direction: INGRESS
+    sourceRanges: 
+    - 0.0.0.0/0
+    targetTags:
+    - nosqld-django
+    allowed:
+    - IPProtocol: TCP
+      ports: 
+      - 8080
+
+# Firewall rule Nosql
+- name: nosqld-firewall-mongo
+  type: compute.v1.firewall
+  properties:
+    network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
+    priority: 1000
+    direction: INGRESS
+    sourceTags: 
+    - nosqld-django
+    targetTags:
+    - nosqld-mongo
+    allowed:
+    - IPProtocol: TCP
+      ports: 
+      - 27017
+
+# MongoDB instances
+- type: compute.v1.instance
+  name: nosqld-mongo-instance
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/zones/us-central1-a/machineTypes/e2-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-386-64
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
+      networkIP: 10.128.0.70
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
+    tags:
+      items: 
+      - nosqld-mongo
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo docker run -e MONGO_INITDB_ROOT_USERNAME=monitoring_user -e MONGO_INITDB_ROOT_PASSWORD=isis2503 -p 27017:27017 -d mongo
+
 # Instance
 - type: compute.v1.instance
   name: kong
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/msbancoalpes/zones/us-central1-a/machineTypes/e2-medium
+    machineType: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/zones/us-central1-a/machineTypes/e2-medium
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -61,7 +138,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
       networkIP: 10.128.0.51
       accessConfigs:
       - name: External NAT
@@ -84,10 +161,10 @@ resources:
           if [ ! -d "/apps" ]; then
             sudo mkdir /apps
             cd /apps
-            sudo git clone https://github.com/ArquiSoft-202410/MSBancoAlpes.git
-            cd MSBancoAlpes
+            sudo git clone https://github.com/ArquiSoft-202410/ms-bancoalpes.git
+            cd ms-bancoalpes
           else
-            cd /apps/MSBancoAlpes
+            cd /apps/ms-bancoalpes
             sudo git pull
           fi
 
@@ -107,7 +184,7 @@ resources:
   name: home
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/msbancoalpes/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -116,7 +193,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
       networkIP: 10.128.0.55
       accessConfigs:
       - name: External NAT
@@ -135,10 +212,10 @@ resources:
           if [ ! -d "/apps" ]; then
             sudo mkdir /apps
             cd /apps
-            sudo git clone https://github.com/ArquiSoft-202410/MSBancoAlpes.git
-            cd MSBancoAlpes
+            sudo git clone https://github.com/ArquiSoft-202410/ms-bancoalpes.git
+            cd ms-bancoalpes
           else
-            cd /apps/MSBancoAlpes
+            cd /apps/ms-bancoalpes
             sudo git pull
           fi
 
@@ -152,7 +229,7 @@ resources:
   name: users
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/msbancoalpes/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -161,7 +238,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
       networkIP: 10.128.0.56
       accessConfigs:
       - name: External NAT
@@ -180,14 +257,51 @@ resources:
           if [ ! -d "/apps" ]; then
             sudo mkdir /apps
             cd /apps
-            sudo git clone https://github.com/ArquiSoft-202410/MSBancoAlpes.git
-            cd MSBancoAlpes
+            sudo git clone https://github.com/ArquiSoft-202410/ms-bancoalpes.git
+            cd ms-bancoalpes
           else
-            cd /apps/MSBancoAlpes
+            cd /apps/ms-bancoalpes
             sudo git pull
           fi
 
           cd Users
+          sudo pip3 install -r Deployment/requirements.txt
+          sudo python3 manage.py makemigrations
+          sudo python3 manage.py migrate
+
+# Instance ManejadorTarjetas
+- type: compute.v1.instance
+  name: nosqld-django-tarjetas-instance
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/zones/us-central1-a/machineTypes/e2-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/ms-bancoalpes/global/networks/default
+      networkIP: 10.128.0.72
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
+    tags:
+      items: 
+      - nosqld-django
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo apt-get update
+          sudo apt install python3-pip -y
+          sudo mkdir /labs
+          cd /labs
+          sudo git clone https://github.com/BancoAlpes-Grupo2/MS-BancoAlpes.git
+          cd MS-BancoAlpes/tarjetasMongo
           sudo pip3 install -r Deployment/requirements.txt
           sudo python3 manage.py makemigrations
           sudo python3 manage.py migrate
