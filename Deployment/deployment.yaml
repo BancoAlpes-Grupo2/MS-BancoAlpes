@@ -129,9 +129,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.52
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -158,9 +155,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.53
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -187,9 +181,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.54
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -216,9 +207,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.55
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -245,9 +233,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.56
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -274,9 +259,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.57
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -303,9 +285,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.58
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
@@ -332,9 +311,6 @@ resources:
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.59
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
     tags:
       items:
       - services-firewall
