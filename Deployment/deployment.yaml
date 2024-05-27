@@ -91,7 +91,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.51
@@ -125,7 +125,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.52
@@ -154,7 +154,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.53
@@ -183,7 +183,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.54
@@ -212,7 +212,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.55
@@ -241,7 +241,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.56
@@ -270,7 +270,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.57
@@ -299,7 +299,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.58
@@ -328,7 +328,7 @@ resources:
       boot: true
       autoDelete: true
       initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+        sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
       networkIP: 10.128.0.59
